@@ -5,7 +5,7 @@ CREATE TABLE unidades(
     nomunidad varchar(30)not null UNIQUE
 );
 
-CREATE TABLE product(
+CREATE TABLE productos(
 	id_prod serial PRIMARY KEY,
     codigo_prod varchar(8)not null UNIQUE,
     nombre_prod varchar(60)NOT null UNIQUE,
@@ -14,22 +14,15 @@ CREATE TABLE product(
 );
 
 CREATE TABLE inventario(
-    item serial PRIMARY KEY,
-    producto varchar(8)not null UNIQUE,
+    producto varchar(60)NOT null PRIMARY KEY,
     stock_prod SMALLINT default 0,
     costo_prod Double DEFAULT 0.0,
     iva_prod SMALLINT,
     utilidad SMALLINT,
-    costo_iva_prod Double DEFAULT 0,0,
+    costo_iva_prod Double DEFAULT 0.0,
     precio_venta_prod Double DEFAULT 0.0,
     total_cst_prod DOUBLE,
     bodega char(3)
-);
-
-create table categoria(
-    codcatg SMALLINT PRIMARY KEY,
-    nomcatg VARCHAR(30)not null UNIQUE,
-    imagen varchar(50)
 );
 
 create table proveedor(
@@ -78,10 +71,30 @@ CREATE TABLE factura_distribuidor(
 );
 
 --fuction and procedure
---consultar productos
+---consultar productos
 CREATE PROCEDURE consult_products()
-	SELECT *FROM product;
+	SELECT *FROM productos;
 
+--insertar productos nuevos
+CREATE PROCEDURE add_new_product
+(
+    codigo varchar(8),producto varchar(60),und varchar(5),imagen varchar(50)
+)
+	
+    INSERT INTO productos(codigo_prod,nombre_prod,unidad_prod,imagen_prod)
+    VALUES(codigo,producto,und,imagen);
+    
+--insertar productos a inventario
+CREATE PROCEDURE add_prod_inventary(new_product varchar(60))
+INSERT INTO inventario(producto)
+SELECT
+nombre_prod FROM producto p
+WHERE
+p.nombre_prod=new_product
+
+UPDATE inventario SET producto=(SELECT nombre_prod FROM productos)
+
+insert into inventario(producto) select nombre_prod from productos p JOIN inventario i WHERE (i.producto=p.nombre_prod) AND i.producto != p.nombre_prod 
 
 --table unidades
 INSERT INTO unidades(codund,nomunidad)VALUES('201','UND');

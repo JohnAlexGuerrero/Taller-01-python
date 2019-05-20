@@ -23,11 +23,11 @@
       
         <!-- Modal Header -->
         <div class="modal-header">
-          <h3 class="modal-title"><?php
+          <h3 class="modal-title">
+          <?php
             include 'databases/db.php';
                 $prod=$_GET['cod']; 
-                $sql="SELECT * FROM productos p
-                JOIN unidades u WHERE (p.undprod=u.codund) AND codprod='$prod'"; 
+                $sql="CALL view_product('$prod')"; 
                 $result = $conn->query($sql);
                 $row=$result->num_rows;
 
