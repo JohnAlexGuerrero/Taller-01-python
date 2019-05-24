@@ -26,7 +26,7 @@ CREATE TABLE inventario(
 );
 
 create table proveedor(
-    id_prov VARCHAR(5) PRIMARY KEY,
+    idproveedor VARCHAR(5) PRIMARY KEY,
     name_prov varchar(30)not null UNIQUE,
     nit_prov varchar(20)not null UNIQUE,
     ciudad_prov varchar(30),
@@ -43,15 +43,12 @@ CREATE TABLE bodega(
 );
 
 create table in_producto(
-    proveedor varchar(5)not null REFERENCES proveedor(id_prov),
-    producto VARCHAR(5)not null REFERENCES productos(codigo_prod), 
-    date_in_prod  date,
+    factura SMALLINT not null REFERENCES factura_distribuidor(id_factura),
+    producto VARCHAR(8)not null REFERENCES productos(codigo_prod), 
     cantidad SMALLINT,
-    costo_sn_iva Double DEFAULT 0.0,
-    iva varchar(15),
-    costo_cn_iva Double DEFAULT 0.0,
-    utilidad SMALLINT
-    precio_vnt_prod DOUBLE,
+    precion_unit Double DEFAULT 0.0,
+    iva SMALLINT,
+    precio_iva_unit Double DEFAULT 0.0,
     PRIMARY KEY (proveedor,producto)
 );
 
@@ -59,15 +56,15 @@ CREATE TABLE type_factura(
     id_type_fact char(2)not null PRIMARY KEY,
     nom_type_fact varchar(10) not null UNIQUE
 );
-
+--factura de proveedor
 CREATE TABLE factura_distribuidor(
-    number_fact varchar(30)not null PRIMARY KEY,
-    proveedor varchar(5)not null REFERENCES proveedor(id_prov),
-    type_fact char(2)not null REFERENCES type_factura(id_type_fact),
+    id_factura serial PRIMARY key,
+    number_fact varchar(30)not null UNIQUE,
+    proveedor varchar(5)not null REFERENCES proveedor(idproveedor),
     fecha_fact date,
     fecha_fact_venc date,
     total_fact Double,
-    dscto Double,
+    estado enum('CANCELADO','PENDIENTE','VENCIDO','ABONADO') DEFAULT 'PENDIENTE'
 );
 
 --fuction and procedure

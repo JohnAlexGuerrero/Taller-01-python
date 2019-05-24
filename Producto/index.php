@@ -19,7 +19,7 @@
   <h2>Inventario de productos</h2>
 </div>
 
-<div class="container mt-3 col-sm-6">
+<div class="container mt-3 col-sm-8">
 
   <div class="row">
       <div class="col-sm-8" ></div>
@@ -31,14 +31,14 @@
       </div>
       <br>
       <div class="container col-sm-8">
-        <input class="form-control" id="myInput" type="text" placeholder="Search product..">
+        <input class="form-control" id="myInput" type="text" placeholder="Busca por codigo o nombre de producto / marca">
       </div>
 
       <br>
       <ul class="list-group" id="myList">
 
       <?php
-           include 'databases/db.php';
+           include '../databases/db.php';
 
             $sql = "CALL query_inventary()";
 
@@ -68,18 +68,11 @@
           }else{
               echo "<div class='alert alert-light'>
               <center>
-              <img src='images/empty_product_icon.png' width='50'><strong> No hay productos!</strong> Crea algunos productos.
+              <img src='../images/empty_product_icon.png' width='50'><strong> No hay productos!</strong> Crea algunos productos.
               </center></div>";
           }
             
       ?>
-      </ul>  
-      <ul class="pagination justify-content-end">
-        <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-        <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-        <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
-      </ul>
     </div>
 
     <script>
@@ -102,9 +95,7 @@
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoria">
     Categoria
   </button>
-  <a type="button" class="btn btn-primary"  href="form-proveedor.php">
-    Registro proveedor
-  </a>
+  
 
   <!-- The newproduct -->
   <div class="modal" id="newproduct">
@@ -143,7 +134,7 @@
                       <option value="">-Seleccionar-</option>
                     
                       <?php
-                        include 'databases/db.php';
+                        include '../databases/db.php';
 
                         $sql=mysqli_query($conn, "SELECT * FROM unidades ORDER BY 2 ASC")
                         or die('Error: '.mysqli_error($sql));

@@ -1,6 +1,6 @@
 <?php
 
-    require_once ("databases/db.php");
+    require_once ("../databases/db.php");
 
     $empresa =strtoupper($_POST['empresa']);
     $nit =$_POST['nit'];

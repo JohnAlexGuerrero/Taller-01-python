@@ -1,5 +1,5 @@
 <?php 
-    include 'databases/db.php';
+    include '../databases/db.php';
 
     $producto =strtoupper($_POST['product']);
     $codigo ="103".$_POST['codigo'];
@@ -9,10 +9,10 @@
     $size_photo=$_FILES['photo']['size'];
 
     if (empty($name_photo)) {
-      $ruta="images/product_default.png";
+      $ruta="../images/product_default.png";
     }else {
-      move_uploaded_file($_FILES['photo']['tmp_name'],"images/products/".$name_photo);
-      $ruta="images/products/".$name_photo;
+      move_uploaded_file($_FILES['photo']['tmp_name'],"../images/products/".$name_photo);
+      $ruta="../images/products/".$name_photo;
     }
 
     $sql ="CALL add_new_product('$codigo','$producto','$und','$ruta')";
@@ -24,7 +24,7 @@
       if ($conn->query($sql_inventary)===true) {
         echo "<div class='alert alert-light'>
               <center>
-              <img src='images/product_default.png' width='50'><strong> Producto fué creado con exito!</strong> Crea algunos productos.
+              <img src='../images/product_default.png' width='50'><strong> Producto fué creado con exito!</strong> Crea algunos productos.
               </center></div>";
         header("refresh:0;url=index.php");
       }
